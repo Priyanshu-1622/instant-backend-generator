@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build Output
+dist/
+
+# Test Outputs (Keep your repo clean!)
+generated-backend/
+schema.json
+my-new-app/
+
+# Environment and Secrets
+.env
+.DS_Store
+*.log

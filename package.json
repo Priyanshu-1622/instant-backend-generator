@@ -1,0 +1,39 @@
+{
+  "name": "instant-backend-generator",
+  "version": "1.0.0",
+  "description": "A production-ready Node.js API generator with Clean Architecture, Prisma, and Zod validation.",
+  "main": "dist/index.js",
+  "bin": {
+    "instant-backend": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "node",
+    "express",
+    "prisma",
+    "zod",
+    "backend-generator",
+    "typescript",
+    "clean-architecture"
+  ],
+  "author": "Priyanshu",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/prompts": "^2.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  }
+}
