@@ -1,7 +1,13 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-export const {{lowerModel}}Schema = z.object({
+export const create{{lowerModel}}Schema = z.object({
 {{#each fields}}
   {{this.name}}: z.{{this.zodType}},
 {{/each}}
-});
+})
+
+// All fields optional for PATCH-style updates
+export const update{{lowerModel}}Schema = create{{lowerModel}}Schema.partial()
+
+export type Create{{lowerModel}}Input = z.infer<typeof create{{lowerModel}}Schema>
+export type Update{{lowerModel}}Input = z.infer<typeof update{{lowerModel}}Schema>

@@ -1,7 +1,7 @@
 {
   "name": "instant-backend-generator",
   "version": "1.0.0",
-  "description": "A production-ready Node.js API generator with Clean Architecture, Prisma, and Zod validation.",
+  "description": "Generate a production-ready Node.js REST backend from a schema — in seconds.",
   "main": "dist/index.js",
   "bin": {
     "instant-backend": "./dist/index.js"
@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r src/templates dist/templates",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
     "prepare": "npm run build"
@@ -23,29 +23,29 @@
     "zod",
     "backend-generator",
     "typescript",
-    "clean-architecture"
+    "clean-architecture",
+    "code-generation",
+    "scaffolding"
   ],
   "author": "Priyanshu",
   "license": "MIT",
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.6.0",
-    "@prisma/client": "^7.6.0",
-    "better-sqlite3": "^12.8.0",
+    "@prisma/client": "^6.0.0",
     "commander": "^12.0.0",
-    "dotenv": "^17.4.1",
-    "express": "^5.2.1",
-    "fs-extra": "^11.3.4",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "fs-extra": "^11.0.0",
     "handlebars": "^4.7.9",
     "prompts": "^2.4.2",
-    "zod": "^4.3.6"
+    "zod": "^3.22.0"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.13",
-    "@types/express": "^5.0.6",
-    "@types/node": "^20.19.39",
+    "@types/express": "^4.17.0",
+    "@types/fs-extra": "^11.0.0",
+    "@types/node": "^20.0.0",
     "@types/prompts": "^2.4.9",
-    "prisma": "^7.6.0",
+    "prisma": "^6.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.0.0"
   }
 }

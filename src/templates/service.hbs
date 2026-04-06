@@ -1,11 +1,34 @@
 import { prisma } from '../prisma/client'
 
 export const create{{model}} = async (data: any) => {
-  return await prisma.{{lowerModel}}.create({
-    data
-  })
+  return await prisma.{{lowerModel}}.create({ data })
 }
 
 export const get{{model}}s = async () => {
-  return await prisma.{{lowerModel}}.findMany()
+  return await prisma.{{lowerModel}}.findMany({
+    orderBy: { createdAt: 'desc' }
+  })
+}
+
+export const get{{model}}ById = async (id: number) => {
+  return await prisma.{{lowerModel}}.findUnique({
+    where: { id }
+  })
+}
+
+export const update{{model}} = async (id: number, data: any) => {
+  try {
+    return await prisma.{{lowerModel}}.update({
+      where: { id },
+      data
+    })
+  } catch {
+    return null
+  }
+}
+
+export const delete{{model}} = async (id: number) => {
+  return await prisma.{{lowerModel}}.delete({
+    where: { id }
+  })
 }

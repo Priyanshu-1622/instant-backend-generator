@@ -1,20 +1,40 @@
 import express from 'express'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 {{#each models}}
 import {{this}}Routes from './routes/{{this}}.route'
 {{/each}}
 
 const app = express()
+const PORT = process.env.PORT || 3000
+
 app.use(express.json())
 
+// Health check
 app.get('/', (req, res) => {
-  res.json({ status: 'API is running', timestamp: new Date().toISOString() })
+  res.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
+// Routes
 {{#each models}}
 app.use('/{{this}}', {{this}}Routes)
 {{/each}}
 
-app.listen(3000, () => {
-  console.log('🚀 Server running on port 3000')
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' })
 })
+
+// Global error handler
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error(err)
+  res.status(500).json({ error: 'Internal server error' })
+})
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
+})
+
+export default app

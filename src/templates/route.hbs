@@ -1,9 +1,12 @@
-import express from 'express'
+import { Router } from 'express'
 import * as controller from '../controllers/{{lowerModel}}.controller'
 
-const router = express.Router()
+const router = Router()
 
-router.post('/', controller.create{{model}})
-router.get('/', controller.get{{model}}s)
+router.post('/',     controller.create{{model}})
+router.get('/',      controller.get{{model}}s)
+router.get('/:id',   controller.get{{model}}ById)
+router.put('/:id',   controller.update{{model}})
+router.delete('/:id', controller.delete{{model}})
 
 export default router

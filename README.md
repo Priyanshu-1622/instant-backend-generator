@@ -1,25 +1,12 @@
 # 🚀 Instant Backend Generator
 
-Generate a production-ready backend in seconds.
+Generate a fully working REST backend from a single schema input — in seconds.
 
 ---
 
 ## ⚡ What is this?
 
-Instant Backend Generator is a CLI tool that lets you create a fully working backend (API + Database) from a simple schema input.
-
-No boilerplate. No setup. Just run and build.
-
----
-
-## 🔥 Features
-
-* ⚡ Generate backend instantly
-* 🧠 Schema-based input
-* 🔗 Supports relations
-* ✅ Built-in validation (Zod)
-* 🗄️ Prisma + SQLite integration
-* 🚀 Express server included
+A CLI tool that turns a simple schema string into a complete, ready-to-run Node.js + Express + Prisma backend. No boilerplate. No setup. Just describe your models and go.
 
 ---
 
@@ -29,67 +16,116 @@ No boilerplate. No setup. Just run and build.
 npx instant-backend
 ```
 
----
-
-## ✍️ Example Input
+You'll be prompted to enter your schema:
 
 ```
-User name:string | Post title:string userId:int
+🧠 Enter schema:
+> User name:string email:string | Post title:string body?:string userId:int
 ```
 
----
-
-## 🎯 What it Generates
-
-* Database schema (Prisma)
-* REST APIs (CRUD)
-* Validation (Zod)
-* Express server
+That's it. Your backend is generated.
 
 ---
 
-## 🌐 Example API
+## ✍️ Schema Format
+
+```
+ModelName field:type field?:type | AnotherModel field:type refId:int
+```
+
+**Supported types:** `string` · `int` · `float` · `boolean` · `datetime`
+
+**Optional fields:** append `?` to the field name — e.g. `bio?:string`
+
+**Relations:** name a field `<ModelName>Id:int` — e.g. `userId:int` creates a `User` relation automatically
+
+---
+
+## 🎯 What Gets Generated
+
+For each model:
+
+| File | Location |
+|---|---|
+| Service (DB logic) | `generated/services/<model>.service.ts` |
+| Controller (HTTP handlers) | `generated/controllers/<model>.controller.ts` |
+| Routes | `generated/routes/<model>.route.ts` |
+| Zod validation | `generated/validations/<model>.validation.ts` |
+
+Plus:
+
+- `generated/app.ts` — Express server entry point
+- `generated/prisma/client.ts` — Prisma client singleton
+- `prisma/schema.prisma` — Prisma schema with relations
+
+---
+
+## 🌐 Generated API Endpoints
+
+For every model (e.g. `User`):
+
+| Method | Route | Description |
+|---|---|---|
+| `POST` | `/user` | Create a user |
+| `GET` | `/user` | Get all users |
+| `GET` | `/user/:id` | Get user by ID |
+| `PUT` | `/user/:id` | Update user |
+| `DELETE` | `/user/:id` | Delete user |
+
+---
+
+## 📦 Running the Generated Backend
 
 ```bash
-GET /user
-POST /user
-GET /post
-POST /post
+# 1. Install dependencies in the generated project
+npm install express @prisma/client dotenv zod
+npm install -D prisma ts-node typescript @types/express @types/node
+
+# 2. Run Prisma migration
+npx prisma migrate dev --name init
+
+# 3. Start the server
+npx ts-node generated/app.ts
 ```
+
+Server starts on `http://localhost:3000` (or `PORT` from `.env`).
 
 ---
 
-## 🧪 Example Response
+## 🧪 Example Request / Response
+
+```bash
+POST /user
+Content-Type: application/json
+
+{ "name": "Priyanshu", "email": "p@example.com" }
+```
 
 ```json
-[
-  {
-    "id": 1,
-    "title": "Hello",
-    "userId": 1
-  }
-]
+{ "id": 1, "name": "Priyanshu", "email": "p@example.com", "createdAt": "2026-04-07T..." }
+```
+
+Validation errors return `400` with details:
+
+```json
+{
+  "error": "Validation failed",
+  "details": [{ "path": ["email"], "message": "Required" }]
+}
 ```
 
 ---
 
-## 🧠 Why this exists
+## 🛣️ Roadmap
 
-Backend setup is repetitive and time-consuming.
-
-This tool reduces it from hours → seconds.
-
----
-
-## 🚀 Roadmap
-
-* [ ] Optional fields
-* [ ] Enums
-* [ ] Authentication
-* [ ] Plugin system
+- [ ] `--output` flag to choose output directory
+- [ ] Enum support
+- [ ] Authentication (JWT)
+- [ ] Pagination on list endpoints
+- [ ] Plugin system
 
 ---
 
 ## ⭐ Support
 
-If you like this project, give it a star ⭐
+If this saves you time, give it a star ⭐
