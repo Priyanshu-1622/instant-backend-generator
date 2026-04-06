@@ -1,15 +1,26 @@
-# Dependencies
+# dependencies
 node_modules/
 
-# Build Output
+# build output
 dist/
 
-# Test Outputs (Keep your repo clean!)
-generated-backend/
-schema.json
-my-new-app/
+# generated backend (user output)
+generated/
 
-# Environment and Secrets
+# environment variables
 .env
+
+# prisma database
+prisma/dev.db
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
 .DS_Store
-*.log
+Thumbs.db
+
+# VS Code
+.vscode/

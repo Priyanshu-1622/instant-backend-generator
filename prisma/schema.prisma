@@ -1,0 +1,20 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  title String
+  userId Int
+  user user? @relation(fields: [userId], references: [id])
+}

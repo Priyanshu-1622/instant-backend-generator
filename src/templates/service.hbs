@@ -1,0 +1,11 @@
+import { prisma } from '../prisma/client'
+
+export const create{{model}} = async (data: any) => {
+  return await prisma.{{lowerModel}}.create({
+    data
+  })
+}
+
+export const get{{model}}s = async () => {
+  return await prisma.{{lowerModel}}.findMany()
+}

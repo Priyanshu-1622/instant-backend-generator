@@ -1,0 +1,22 @@
+import { Request, Response } from 'express'
+import * as service from '../services/{{lowerModel}}.service'
+import { {{lowerModel}}Schema } from '../validations/{{lowerModel}}.validation'
+
+export const create{{model}} = async (req: Request, res: Response) => {
+  try {
+    const parsed = {{lowerModel}}Schema.parse(req.body)
+    const result = await service.create{{model}}(parsed)
+    res.json(result)
+  } catch (error: any) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
+export const get{{model}}s = async (req: Request, res: Response) => {
+  try {
+    const result = await service.get{{model}}s()
+    res.json(result)
+  } catch (error: any) {
+    res.status(500).json({ error: error.message })
+  }
+}

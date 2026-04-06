@@ -1,0 +1,9 @@
+import express from 'express'
+import * as controller from '../controllers/{{lowerModel}}.controller'
+
+const router = express.Router()
+
+router.post('/', controller.create{{model}})
+router.get('/', controller.get{{model}}s)
+
+export default router

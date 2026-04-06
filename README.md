@@ -1,74 +1,95 @@
 # 🚀 Instant Backend Generator
 
-**The zero-config CLI to scaffold production-ready Node.js APIs in seconds.**
-
-Building a backend from scratch usually takes hours of repetitive setup. **Instant Backend Generator** automates the boilerplate, providing you with a clean, scalable, and secure foundation based on industry-standard best practices.
+Generate a production-ready backend in seconds.
 
 ---
 
-## ✨ Key Features
+## ⚡ What is this?
 
-* **🏗️ Clean Architecture:** Automatically scaffolds a layered structure (**Routes → Controllers → Services**) for maximum maintainability.
-* **💎 Database Ready:** Generates a complete **Prisma** schema with PostgreSQL support, including pre-configured models.
-* **🛡️ Type-Safe Validation:** Integrated **Zod** schemas to validate incoming request data before it hits your logic.
-* **🔒 Secure by Default:** Built-in **JWT Authentication** middleware to protect sensitive endpoints.
-* **🪄 Interactive Wizard:** A terminal-based UI to define your data models without writing a single line of JSON.
+Instant Backend Generator is a CLI tool that lets you create a fully working backend (API + Database) from a simple schema input.
+
+No boilerplate. No setup. Just run and build.
 
 ---
 
-## 🛠️ Getting Started
+## 🔥 Features
 
-You don't even need to install it globally to test it. You can run it directly using `npx`.
+* ⚡ Generate backend instantly
+* 🧠 Schema-based input
+* 🔗 Supports relations
+* ✅ Built-in validation (Zod)
+* 🗄️ Prisma + SQLite integration
+* 🚀 Express server included
 
-### 1. Initialize your Schema
-Run the interactive wizard to define your models (e.g., User, Product, Transaction).
+---
+
+## 🚀 Quick Start
 
 ```bash
-npx instant-backend-generator init
+npx instant-backend
+```
 
-2. Generate the Codebase
-Once your schema.json is ready, trigger the engine to build your backend.
-Bash
-npx instant-backend-generator generate
+---
 
-3. Launch the Generated API
-Bash
-cd generated-backend
-npm install
-npx prisma generate
-npm run dev
+## ✍️ Example Input
 
-📂 Generated Project Structure
-The CLI produces a professional directory layout designed for scale:
-generated-backend/
-├── src/
-│   ├── controllers/      # Request & Response handling
-│   ├── services/         # Business logic & DB queries
-│   ├── routes/           # Endpoint definitions
-│   ├── validations/      # Zod validation schemas
-│   ├── middlewares/      # JWT & Auth logic
-│   └── index.ts          # Express Server Entry
-├── prisma/               # Database schemas
-├── .env                  # Environment configuration
-└── tsconfig.json         # TypeScript rules
+```
+User name:string | Post title:string userId:int
+```
 
-🚀 Why Use This?
-Most generators dump everything into one file. This tool is built for developers who need:
+---
 
-1. Separation of Concerns: Keep logic out of your route files.
+## 🎯 What it Generates
 
-2. Strict Typing: Full TypeScript support across every layer.
+* Database schema (Prisma)
+* REST APIs (CRUD)
+* Validation (Zod)
+* Express server
 
-3. Speed: Go from idea to a working API in under 60 seconds.
+---
 
-🏗️ Built With
-1. Node.js - Runtime environment
+## 🌐 Example API
 
-2. TypeScript - Type safety
+```bash
+GET /user
+POST /user
+GET /post
+POST /post
+```
 
-3. Commander.js - CLI framework
+---
 
-4, Prompts - Interactive terminal UI
+## 🧪 Example Response
 
-📄 License
-This project is licensed under the MIT License. Feel free to use it for personal or commercial projects.
+```json
+[
+  {
+    "id": 1,
+    "title": "Hello",
+    "userId": 1
+  }
+]
+```
+
+---
+
+## 🧠 Why this exists
+
+Backend setup is repetitive and time-consuming.
+
+This tool reduces it from hours → seconds.
+
+---
+
+## 🚀 Roadmap
+
+* [ ] Optional fields
+* [ ] Enums
+* [ ] Authentication
+* [ ] Plugin system
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a star ⭐
