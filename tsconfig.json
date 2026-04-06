@@ -4,7 +4,6 @@
     "module": "commonjs",
     "rootDir": "./src",
     "outDir": "./dist",
-    "ignoreDeprecations": "5.0",
 
     "esModuleInterop": true,
     "strict": true,
