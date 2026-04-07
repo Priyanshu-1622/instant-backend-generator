@@ -1,87 +1,81 @@
 import { Request, Response } from 'express'
-import { ZodError } from 'zod'
+import { z, ZodError } from 'zod'
 import * as service from '../services/{{lowerModel}}.service'
-import { create{{model}}Schema, update{{model}}Schema } from '../validations/{{lowerModel}}.validation'
 
+// ── Zod validators colocated with handlers for runtime safety ─────────────────
+
+const createSchema = z.object({
+{{#each fields}}
+  {{this.name}}: {{this.zodType}},
+{{/each}}
+})
+
+const updateSchema = createSchema.partial()
+
+type CreateInput = z.infer<typeof createSchema>
+type UpdateInput = z.infer<typeof updateSchema>
+
+// ── Handlers ──────────────────────────────────────────────────────────────────
+
+function handleError(res: Response, error: unknown, msg: string): void {
+  if (error instanceof ZodError) {
+    res.status(400).json({ error: 'Validation failed', details: error.errors })
+    return
+  }
+  console.error(error)
+  res.status(500).json({ error: msg })
+}
+
+{{#if hasCreate}}
 export const create{{model}} = async (req: Request, res: Response): Promise<void> => {
   try {
-    const parsed = create{{model}}Schema.parse(req.body)
-    const result = await service.create{{model}}(parsed)
+    const data: CreateInput = createSchema.parse(req.body)
+    const result = await service.create{{model}}(data)
     res.status(201).json(result)
-  } catch (error) {
-    if (error instanceof ZodError) {
-      res.status(400).json({ error: 'Validation failed', details: error.errors })
-      return
-    }
-    console.error(error)
-    res.status(500).json({ error: 'Failed to create {{lowerModel}}' })
-  }
+  } catch (e) { handleError(res, e, 'Failed to create {{lowerModel}}') }
 }
+{{/if}}
 
+{{#if hasList}}
 export const get{{model}}s = async (_req: Request, res: Response): Promise<void> => {
   try {
-    const result = await service.get{{model}}s()
-    res.json(result)
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Failed to fetch {{lowerModel}}s' })
-  }
+    res.json(await service.get{{model}}s())
+  } catch (e) { handleError(res, e, 'Failed to fetch {{lowerModel}}s') }
 }
+{{/if}}
 
+{{#if hasGet}}
 export const get{{model}}ById = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = parseInt(req.params.id)
-    if (isNaN(id)) {
-      res.status(400).json({ error: 'Invalid ID' })
-      return
-    }
+    if (isNaN(id)) { res.status(400).json({ error: 'Invalid ID' }); return }
     const result = await service.get{{model}}ById(id)
-    if (!result) {
-      res.status(404).json({ error: '{{model}} not found' })
-      return
-    }
+    if (!result) { res.status(404).json({ error: '{{model}} not found' }); return }
     res.json(result)
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Failed to fetch {{lowerModel}}' })
-  }
+  } catch (e) { handleError(res, e, 'Failed to fetch {{lowerModel}}') }
 }
+{{/if}}
 
+{{#if hasUpdate}}
 export const update{{model}} = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = parseInt(req.params.id)
-    if (isNaN(id)) {
-      res.status(400).json({ error: 'Invalid ID' })
-      return
-    }
-    const parsed = update{{model}}Schema.parse(req.body)
-    const result = await service.update{{model}}(id, parsed)
-    if (!result) {
-      res.status(404).json({ error: '{{model}} not found' })
-      return
-    }
+    if (isNaN(id)) { res.status(400).json({ error: 'Invalid ID' }); return }
+    const data: UpdateInput = updateSchema.parse(req.body)
+    const result = await service.update{{model}}(id, data)
+    if (!result) { res.status(404).json({ error: '{{model}} not found' }); return }
     res.json(result)
-  } catch (error) {
-    if (error instanceof ZodError) {
-      res.status(400).json({ error: 'Validation failed', details: error.errors })
-      return
-    }
-    console.error(error)
-    res.status(500).json({ error: 'Failed to update {{lowerModel}}' })
-  }
+  } catch (e) { handleError(res, e, 'Failed to update {{lowerModel}}') }
 }
+{{/if}}
 
+{{#if hasDelete}}
 export const delete{{model}} = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = parseInt(req.params.id)
-    if (isNaN(id)) {
-      res.status(400).json({ error: 'Invalid ID' })
-      return
-    }
+    if (isNaN(id)) { res.status(400).json({ error: 'Invalid ID' }); return }
     await service.delete{{model}}(id)
     res.status(204).send()
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Failed to delete {{lowerModel}}' })
-  }
+  } catch (e) { handleError(res, e, 'Failed to delete {{lowerModel}}') }
 }
+{{/if}}

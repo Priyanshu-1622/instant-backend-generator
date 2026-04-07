@@ -3,10 +3,20 @@ import * as controller from '../controllers/{{lowerModel}}.controller'
 
 const router = Router()
 
-router.post('/',     controller.create{{model}})
-router.get('/',      controller.get{{model}}s)
-router.get('/:id',   controller.get{{model}}ById)
-router.put('/:id',   controller.update{{model}})
+{{#if hasCreate}}
+router.post('/',      controller.create{{model}})
+{{/if}}
+{{#if hasList}}
+router.get('/',       controller.get{{model}}s)
+{{/if}}
+{{#if hasGet}}
+router.get('/:id',    controller.get{{model}}ById)
+{{/if}}
+{{#if hasUpdate}}
+router.put('/:id',    controller.update{{model}})
+{{/if}}
+{{#if hasDelete}}
 router.delete('/:id', controller.delete{{model}})
+{{/if}}
 
 export default router

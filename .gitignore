@@ -4,13 +4,15 @@ node_modules/
 # Build output
 dist/
 
-# Generated backend (example output — commit your own if needed)
+# Generated backend output
 generated/
+
+# Prisma
+*.db
+*.db-journal
 
 # Environment
 .env
-*.db
-*.db-journal
 
 # Logs
 *.log
@@ -18,3 +20,10 @@ generated/
 # OS
 .DS_Store
 Thumbs.db
+
+# Playwright
+test-results/
+playwright-report/
+
+# NOTE: generated.lock IS committed — it tracks what was generated
+# so re-runs stay idempotent. Do not add it here.

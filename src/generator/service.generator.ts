@@ -1,10 +1,17 @@
 import fs from "fs";
 import path from "path";
 import Handlebars from "handlebars";
+import { RouteName } from "../commands/generate";
 
-export const generateService = (model: string): string => {
-  const templatePath = path.join(__dirname, "../templates/service.hbs");
-  const template = fs.readFileSync(templatePath, "utf-8");
-  const compile = Handlebars.compile(template);
-  return compile({ model, lowerModel: model.toLowerCase() });
+export const generateService = (model: string, routes: RouteName[]): string => {
+  const template = fs.readFileSync(path.join(__dirname, "../templates/service.hbs"), "utf-8");
+  return Handlebars.compile(template)({
+    model,
+    lowerModel: model.toLowerCase(),
+    hasCreate: routes.includes("create"),
+    hasList:   routes.includes("list"),
+    hasGet:    routes.includes("get"),
+    hasUpdate: routes.includes("update"),
+    hasDelete: routes.includes("delete"),
+  });
 };

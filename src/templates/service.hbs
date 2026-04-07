@@ -1,34 +1,33 @@
 import { prisma } from '../prisma/client'
 
+{{#if hasCreate}}
 export const create{{model}} = async (data: any) => {
   return await prisma.{{lowerModel}}.create({ data })
 }
+{{/if}}
 
+{{#if hasList}}
 export const get{{model}}s = async () => {
-  return await prisma.{{lowerModel}}.findMany({
-    orderBy: { createdAt: 'desc' }
-  })
+  return await prisma.{{lowerModel}}.findMany({ orderBy: { createdAt: 'desc' } })
 }
+{{/if}}
 
+{{#if hasGet}}
 export const get{{model}}ById = async (id: number) => {
-  return await prisma.{{lowerModel}}.findUnique({
-    where: { id }
-  })
+  return await prisma.{{lowerModel}}.findUnique({ where: { id } })
 }
+{{/if}}
 
+{{#if hasUpdate}}
 export const update{{model}} = async (id: number, data: any) => {
   try {
-    return await prisma.{{lowerModel}}.update({
-      where: { id },
-      data
-    })
-  } catch {
-    return null
-  }
+    return await prisma.{{lowerModel}}.update({ where: { id }, data })
+  } catch { return null }
 }
+{{/if}}
 
+{{#if hasDelete}}
 export const delete{{model}} = async (id: number) => {
-  return await prisma.{{lowerModel}}.delete({
-    where: { id }
-  })
+  return await prisma.{{lowerModel}}.delete({ where: { id } })
 }
+{{/if}}
