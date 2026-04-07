@@ -242,7 +242,7 @@ Request → Route → Controller → Service → Prisma → SQLite
 PRs welcome. Open an issue first for large changes.
 
 ```bash
-git clone https://github.com/your-username/instant-backend-generator
+git clone [https://github.com/your-username/instant-backend-generator](https://github.com/Priyanshu-1622/instant-backend-generator)
 cd instant-backend-generator
 npm install
 npm run dev
@@ -252,7 +252,7 @@ npm run dev
 
 ## 📄 License
 
-MIT © [Priyanshu](https://github.com/your-username)
+MIT © [Priyanshu](https://github.com/Priyanshu-1622)
 
 ---
 
